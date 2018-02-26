@@ -10,14 +10,19 @@ var parser = require('body-parser');
 const bcrypt = require('bcrypt');
 var db = require('./connection');
 
+var salt = bcrypt.genSaltSync(10);
+
 app.use(parser.urlencoded({extended : false}));
 app.use(parser.json());
 const port = 3000;
 
 app.post('/login', function (req, res) {
-    var username = req.body.username;
+
+    var username = req.body.username; //username input
+    
+
     db.login(username).then(function (response) {
-        if(response.length > 0 && response[0].username == username){
+        if(response.length > 0 && response[0].username == username && bcrypt.compareSync(req.body.password,response[0].password.toString())){
             res.send('');
         }
         else {

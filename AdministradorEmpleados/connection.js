@@ -23,7 +23,7 @@ var connection = mysql.createConnection({
 var exports = module.exports = {};
 exports.login = function loginV(username) {
     return new Promise(function (resolve, reject) {
-            var query = 'select username, password from User where username = \'' + username + '\';';
+            var query = 'select username, password from Person where username = \'' + username + '\';';
             connection.query(query, function (err, rows) {
                 if (err) {
                     reject(err);
