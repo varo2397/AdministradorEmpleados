@@ -39,13 +39,16 @@ MAIN CONTENT
         <form class="form-login" action="" method="post">
             <h2 class="form-login-heading">Inicio de sesion</h2>
             <div class="login-wrap">
-                <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" autofocus>
-                <br>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña">
-                <br>
-                <button class="btn btn-theme btn-block" id = "formSubmit"><i class="fa fa-lock"></i> Entrar</button>
+                <form>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" autofocus required>
+                    <br>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+                    <br>
+                    <button class="btn btn-theme btn-block" type="submit" id = "formSubmit"><i class="fa fa-lock"></i> Entrar</button>
 
-
+                </form>
+            <br>
+            <div><p id="error" class="text-danger"></p></div>
             </div>
         </form>
     </div>
@@ -65,20 +68,32 @@ MAIN CONTENT
             username: $('#username').val(),
             password: $('#password').val()
         }
-        $.ajax({
-            method: 'post',
-            url: 'http://localhost:3000/login',
-            data: userData,
+        if($('#username').val().length != 0 && $('#password').val().length != 0){
+            $.ajax({
+                method: 'post',
+                url: 'http://localhost:3000/login',
+                data: userData,
+                success: function (data) {
+                    if(data == ''){
+                        window.location.href = '../Views/payroll.html';
+                    }
+                    else {
+                        $('#error').html(data);
+                    }
+                },
+                error: function () {
+                    console.log('no funciono');
+                }
+            })
+            return false;
+        }
+        else if($('#username').val().length == 0){
+            $('#error').html("Ingrese un nombre de usuario ");
+        }
+        else if($('#password').val().length == 0){
+            $('#error').html("Ingrese una contraseña");
+        }
 
-            success: function (data) {
-                console.log('funciono');
-                console.log(data);
-            },
-            error: function () {
-                console.log('no funciono');
-            }
-        })
-        return false;
 
     });
 </script>
