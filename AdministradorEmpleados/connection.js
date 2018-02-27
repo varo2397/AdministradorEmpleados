@@ -119,6 +119,20 @@ exports.getUnapprovedVactions = function () {
     })
 }
 
+
+exports.approveVaction = function (idVaction) {
+    return new Promise(function (resolve, reject) {
+        var query = 'update vacation set state = 1 where idVacation = ' + idVaction + ';';
+        connection.query(query,function (err, rows) {
+            if(err){
+                reject(err);
+            }
+            resolve(rows);
+        })
+    })
+}
+
+// reemplazado con el stored procedure addUser
 /*
 exports.addUser = function (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, username, password, identification) {
     return new Promise(function (resolve, reject) {
