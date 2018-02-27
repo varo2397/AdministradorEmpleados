@@ -79,7 +79,7 @@ MAIN SIDEBAR MENU
                         <span>Historiales</span>
                     </a>
                     <ul class="sub">
-                        <li><a  href="vacactionHistory.html">Vacaciones</a></li>
+                        <li><a  href="vacationHistory.html">Vacaciones</a></li>
                         <li><a  href="paymentHistory.html">Pagos</a></li>
                     </ul>
                 </li>
@@ -117,7 +117,7 @@ MAIN CONTENT
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="">
                             <tr>
                                 <td>Company Ltd</td>
                                 <td><span class="label label-info label-mini">Aprobada</span></td>
@@ -160,6 +160,18 @@ MAIN CONTENT
         $('select.styled').customSelect();
     });
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url:'http://localhost:3000/vacations',
+            method: 'get',
+            success: function (data) {
+                
+            }
+        })
+    })
 </script>
 
 </body>

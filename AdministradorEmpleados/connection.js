@@ -20,8 +20,6 @@ exports.login = function login(username) {
                 resolve(rows);
             })
         })
-
-
 }
 
 
@@ -121,6 +119,7 @@ exports.getUnapprovedVactions = function () {
     })
 }
 
+/*
 exports.addUser = function (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, username, password, identification) {
     return new Promise(function (resolve, reject) {
 		
@@ -138,3 +137,4 @@ exports.addUser = function (accountNumber, firstName, secondName, firstLastName,
         })
     })
 }
+*/

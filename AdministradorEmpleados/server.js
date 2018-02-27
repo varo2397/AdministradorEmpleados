@@ -162,7 +162,7 @@ app.get('/getPersonalInfo',function (req, res) {
         date = new Date(userData.startAtCompany);
         var startAtCompany = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 
-        html += '<li>Nombre:'+ userData.firstName + userData.secondName + userData.firstLastName + userData.secondLastName + '</li>\n' +
+        html += '<li>Nombre: '+ userData.firstName + ' ' + userData.secondName + ' ' + userData.firstLastName + ' ' + userData.secondLastName + '</li>\n' +
             '                        <br>\n' +
             '                        <li>Cédula: '+ userData.identification + '</li>\n' +
             '                        <br>\n' +
@@ -183,6 +183,10 @@ app.get('/getPersonalInfo',function (req, res) {
             '                        <li>Inicio de labores: ' + startAtCompany + '</li>\n';
         res.send(html);
     })
+})
+
+app.get('/vacactions', function (req, res) {
+    
 })
 
 app.listen(port);
