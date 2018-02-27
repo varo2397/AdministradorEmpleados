@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 var exports = module.exports = {};
 exports.login = function login(username) {
     return new Promise(function (resolve, reject) {
-            var query = 'select username, password, administrator from Person where username = \'' + username + '\';';
+            var query = 'select username, password, administrator,id from Person where username = \'' + username + '\';';
             connection.query(query, function (err, rows) {
                 if (err) {
                     reject(err);
@@ -56,6 +56,17 @@ exports.addJob = function (jobName, jobState) {
             resolve('');
         })
     }))
+}
 
+exports.getPaymentHistory = function (id) {
+    return new Promise(function (resolve, reject) {
+        var query = 'select date,amount from Payment where idUser = ' + id + ';';
+        connection.query(query,function (error,rows) {
+            if(error){
+                reject(err);
+            }
+            resolve(rows);
+        })
+    })
 }
 

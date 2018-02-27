@@ -117,12 +117,8 @@ MAIN CONTENT
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>23/02/2014</td>
-                                <td>12982394792</td>
+                            <tbody id="paymentHistory">
 
-                            </tr>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
@@ -161,6 +157,18 @@ MAIN CONTENT
         $('select.styled').customSelect();
     });
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:3000/getPaymentHistory',
+            method: 'get',
+            success: function (data) {
+                $('#paymentHistory').html(data);
+            }
+        })
+    })
 </script>
 
 </body>

@@ -32,7 +32,7 @@ app.post('/login', function (req, res) {
 
             sess.username = username;
             sess.typeOfUser = response[0].administrator;
-
+            sess.userId = response[0].id;
             res.send('');
         }
         else {
@@ -115,12 +115,33 @@ app.post('/editJob',function (req, res) {
 })
 
 app.post('/addJob', function (req, res) {
+    //adding a job
     sess = req.session;
     var jobName = req.body.jobName;
     var state = req.body.state === 'true' ? 1 : 0;
 
     db.addJob(jobName,state).then(function (response) {
         res.send('');
+    })
+})
+
+app.get('/getPaymentHistory', function (req, res) {
+
+    sess = req.session;
+    var userId = sess.userId; //current user
+
+    db.getPaymentHistory(userId).then(function (response) {
+        var html = '';
+        response.forEach(function (value) {
+            var myDate = new Date(value.date);
+            var date = (myDate.getMonth() + 1) + '/' + myDate.getDate() + '/' + myDate.getFullYear(); //correct format of date
+            var element = '<tr>' +
+                '<td>' + date + '</td>' +
+                '<td> ' + value.amount + '</td>'
+                '</tr>';
+            html += element;
+        })
+        res.send(html);
     })
 })
 
