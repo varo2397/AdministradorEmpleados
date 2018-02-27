@@ -6,6 +6,9 @@ var connection = mysql.createConnection({
     password: 'root',
     database: 'companysystem'
 });
+
+
+
 var exports = module.exports = {};
 exports.login = function login(username) {
     return new Promise(function (resolve, reject) {
