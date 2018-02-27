@@ -108,7 +108,7 @@ MAIN CONTENT
                 <div class="col-lg-3"></div>
 
                 <div class="col-lg-6 form-panel">
-                    <h3><i class="fa fa-angle-right"></i> Actualizar puesto</h3>
+                    <h3><i class="fa fa-angle-right"></i> Crear puesto</h3>
                     <br>
 
                     <form class="form-horizontal style-form" method="get">
@@ -136,7 +136,7 @@ MAIN CONTENT
                             <div class="  form-group ">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-2">
-                                    <button type="button" id="submitForm" class="btn btn-theme">Actualizar</button>
+                                    <button type="button" id="submitForm" class="btn btn-theme">Agregar</button>
                                 </div>
                                 <div class="col-md-1">
                                     <a type="button" class="btn btn-theme04" href="jobs.html">Cancelar</a>
@@ -202,7 +202,7 @@ MAIN CONTENT
         var jobName = $('#jobName').val();
         var state = $('#checkbox').is(':checked');
         $.ajax({
-            url: 'http://localhost:3000/login',
+            url: 'http://localhost:3000/addJob',
             method: 'post',
             data: {jobName: jobName, state: state},
             success: function (data) {

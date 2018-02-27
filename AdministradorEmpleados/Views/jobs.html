@@ -199,8 +199,23 @@ MAIN CONTENT
     });
 </script>
 <script>
-    $()
+    $(document).on('click', '#addJob', function(){
+        $.ajax({
+            url: 'http://localhost:3000/checkPermisions',
+            method: 'get',
+            success: function (data) {
+                if(data == ''){
+                    window.location.href = '../Views/addJob.html';
+                }
+                else {
+                    $('#error').html(data);
+                }
+
+            }
+        })
+    });
 </script>
+
 
 </body>
 </html>

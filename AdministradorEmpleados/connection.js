@@ -46,3 +46,16 @@ exports.editJob = function (idJob,newJobName,newJobStatus) {
     })
 }
 
+exports.addJob = function (jobName, jobState) {
+    return new Promise((function (resolve, reject) {
+        var query = 'insert into Job(jobName,state) values(\'' + jobName + '\',' + jobState + ');'
+        connection.query(query,function (err, rows) {
+            if (err){
+                reject(err);
+            }
+            resolve('');
+        })
+    }))
+
+}
+

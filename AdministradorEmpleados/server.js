@@ -18,7 +18,7 @@ app.use(session({secret: 'ssshhhhh'}));
 app.use(parser.json());
 const port = 3000;
 
-var sess;
+var sess; //variable for sessions
 
 app.post('/login', function (req, res) {
 
@@ -46,6 +46,7 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/jobs',function (req, res) {
+    //get all of the jobs available
     db.getJobs().then(function (response) {
         sess = req.session;
         sess.jobs = response;
@@ -77,10 +78,17 @@ app.post('/selectedJob', function (req, res) {
     sess = req.session;
     sess.selectedIdJob = selectedIdJob;
 
-    res.send('');
+    var typeOfUser = sess.typeOfUser;
+
+    if(typeOfUser == 0){ //checking if user has the permissions
+        res.send('No tiene los permisos para modificar <br><br>');
+    }
+    else{
+        res.send('');
+    }
 })
 
-app.get('/selectedJob', function(req, res){
+app.get('/checkPermisions', function(req, res){
     //get the info of selected job
     sess = req.session;
     var typeOfUser = sess.typeOfUser;
@@ -88,33 +96,33 @@ app.get('/selectedJob', function(req, res){
     if(typeOfUser == 0){ //checking if user has the permissions
         res.send('No tiene los permisos para modificar <br><br>');
     }
-
-    var jobs = sess.jobs;
-    var selectedIdJob = sess.selectedIdJob;
-    for(var i = 0; i < jobs.length; i++){
-        if(jobs[i].idJob == selectedIdJob){
-            res.send(jobs[i].jobName);
-        }
+    else{
+        res.send('');
     }
 })
 
 app.post('/editJob',function (req, res) {
+    //edit a job
     sess = req.session;
-
 
     var jobName = req.body.jobName;
     var state = req.body.state === 'true' ? 1 : 0;
     var idJob = sess.selectedIdJob;
 
-
-
     db.editJob(idJob, jobName, state).then(function (response) {
         res.send('');
     })
-
 })
 
+app.post('/addJob', function (req, res) {
+    sess = req.session;
+    var jobName = req.body.jobName;
+    var state = req.body.state === 'true' ? 1 : 0;
 
+    db.addJob(jobName,state).then(function (response) {
+        res.send('');
+    })
+})
 
 app.listen(port);
 
