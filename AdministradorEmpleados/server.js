@@ -46,7 +46,7 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/jobs',function (req, res) {
-    db.jobs().then(function (response) {
+    db.getJobs().then(function (response) {
         sess = req.session;
         sess.jobs = response;
         var html = '';
@@ -71,6 +71,7 @@ app.get('/jobs',function (req, res) {
 })
 
 app.post('/selectedJob', function (req, res) {
+    //save the selected job id in the session
     var selectedIdJob = req.body.selectedIdJob;
 
     sess = req.session;
@@ -80,7 +81,14 @@ app.post('/selectedJob', function (req, res) {
 })
 
 app.get('/selectedJob', function(req, res){
+    //get the info of selected job
     sess = req.session;
+    var typeOfUser = sess.typeOfUser;
+
+    if(typeOfUser == 0){ //checking if user has the permissions
+        res.send('No tiene los permisos para modificar <br><br>');
+    }
+
     var jobs = sess.jobs;
     var selectedIdJob = sess.selectedIdJob;
     for(var i = 0; i < jobs.length; i++){
@@ -88,6 +96,22 @@ app.get('/selectedJob', function(req, res){
             res.send(jobs[i].jobName);
         }
     }
+})
+
+app.post('/editJob',function (req, res) {
+    sess = req.session;
+
+
+    var jobName = req.body.jobName;
+    var state = req.body.state === 'true' ? 1 : 0;
+    var idJob = sess.selectedIdJob;
+
+
+
+    db.editJob(idJob, jobName, state).then(function (response) {
+        res.send('');
+    })
+
 })
 
 

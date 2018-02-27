@@ -105,9 +105,9 @@ MAIN CONTENT
         <section class="wrapper site-min-height">
             <br>
             <div class="row mt">
-                <div class="col-lg-2"></div>
+                <div class="col-lg-3"></div>
 
-                <div class="col-lg-8 form-panel">
+                <div class="col-lg-6 form-panel">
                     <h3><i class="fa fa-angle-right"></i> Actualizar puesto</h3>
                     <br>
 
@@ -118,7 +118,6 @@ MAIN CONTENT
                             </div>
                             <div class="col-sm-8">
                                 <input type="text" id="jobName" class="form-control">
-                                <div id="error" class="text-danger"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -128,7 +127,7 @@ MAIN CONTENT
                                 <div class="switch switch-square "
                                      data-on-label="<i class=' fa fa-check'></i>"
                                      data-off-label="<i class='fa fa-times'></i>">
-                                    <input id="checkbox" value="true" type="checkbox" class="form-control" />
+                                    <input id="checkbox" type="checkbox" class="form-control" />
                                 </div>
                             </div>
 
@@ -199,24 +198,17 @@ MAIN CONTENT
 </script>
 
 <script>
-    //save changes to db
     $('#submitForm').on('click',function () {
         var jobName = $('#jobName').val();
         var state = $('#checkbox').is(':checked');
-        if(jobName.length != 0){
-            $.ajax({
-                url: 'http://localhost:3000/editJob',
-                method: 'post',
-                data: {jobName: jobName, state: state},
-                success: function (data) {
-                    window.location.href = '../Views/jobs.html';
-                }
-            })
-        }
-        else{
-            $('#error').html('<br><br> Ingrese un nombre para el puesto <br><br>');
-        }
-
+        $.ajax({
+            url: 'http://localhost:3000/login',
+            method: 'post',
+            data: {jobName: jobName, state: state},
+            success: function (data) {
+                window.location.href = '../Views/jobs.html';
+            }
+        })
     })
 </script>
 
