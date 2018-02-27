@@ -118,6 +118,7 @@ MAIN CONTENT
                             </div>
                             <div class="col-sm-8">
                                 <input type="text" id="jobName" class="form-control">
+                                <div id="error" class="text-danger"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -201,14 +202,20 @@ MAIN CONTENT
     $('#submitForm').on('click',function () {
         var jobName = $('#jobName').val();
         var state = $('#checkbox').is(':checked');
-        $.ajax({
-            url: 'http://localhost:3000/addJob',
-            method: 'post',
-            data: {jobName: jobName, state: state},
-            success: function (data) {
-                window.location.href = '../Views/jobs.html';
-            }
-        })
+        if(jobName.length > 0){
+            $.ajax({
+                url: 'http://localhost:3000/addJob',
+                method: 'post',
+                data: {jobName: jobName, state: state},
+                success: function (data) {
+                    window.location.href = '../Views/jobs.html';
+                }
+            })
+        }
+        else {
+            $('#error').html('<br><br> Ingrese un nombre para el puesto <br><br>');
+        }
+
     })
 </script>
 

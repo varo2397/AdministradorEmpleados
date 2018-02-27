@@ -110,28 +110,8 @@ MAIN CONTENT
                 <div class="col-lg-6">
                     <h2>Información</h2>
                     <br>
-                    <div style="font-size: 15px">
-                        <li>Nombre: Alvaro Castro Venegas</li>
-                        <br>
-                        <li>Cédula: 116710731</li>
-                        <br>
-                        <li>Celular: 86424112</li>
-                        <br>
-                        <li>Fecha de nacimiento: 23/03/1997</li>
-                        <br>
-                        <li>Correo: alvarocastro74@gmail.com</li>
-                        <br>
-                        <li>Número de cuenta bancaria: XXXXXXXXXXXXXXXX</li>
-                        <br>
-                        <li>Puesto: Project Manager</li>
-                        <br>
-                        <li>Administrador: Si</li>
-                        <br>
-                        <li>Familiares</li>
-                        <ul style="list-style-type:circle">
-                            <br>
-                            <li>Alvaro Castro Rodriguez</li>
-                        </ul>
+                    <div id="info" style="font-size: 15px">
+
                     </div>
 
 
@@ -168,6 +148,18 @@ MAIN CONTENT
         $('select.styled').customSelect();
     });
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:3000/getPersonalInfo',
+            method: 'get',
+            success: function (data) {
+                $('#info').html(data);
+            }
+        })
+    })
 </script>
 
 </body>

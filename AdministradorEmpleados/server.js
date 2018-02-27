@@ -118,7 +118,7 @@ app.post('/addJob', function (req, res) {
     //adding a job
     sess = req.session;
     var jobName = req.body.jobName;
-    var state = req.body.state === 'true' ? 1 : 0;
+    var state = req.body.state === 'true' ? 1 : 0; //passing from a string to db type
 
     db.addJob(jobName,state).then(function (response) {
         res.send('');
@@ -141,6 +141,46 @@ app.get('/getPaymentHistory', function (req, res) {
                 '</tr>';
             html += element;
         })
+        res.send(html);
+    })
+})
+
+app.get('/getPersonalInfo',function (req, res) {
+    sess = req.session;
+    var userId = sess.userId; //current logged in user
+
+    db.getPersonalInformation(userId).then(function (response) {
+        var html = '';
+        var userData = response[0];
+
+        //type of user
+        var isAdministrator = (userData.administrator == 1 ? 'Si' : 'No' );
+
+        //format date strings
+        var date = new Date(userData.birthDate);
+        var birthDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+        date = new Date(userData.startAtCompany);
+        var startAtCompany = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+
+        html += '<li>Nombre:'+ userData.firstName + userData.secondName + userData.firstLastName + userData.secondLastName + '</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Cédula: '+ userData.identification + '</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Celular: '+ userData.cellphone + '</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Fecha de nacimiento: '+ birthDate + '</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Correo: '+ userData.email + '</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Número de cuenta bancaria: '+ userData.accountNumber +'</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Puesto: ' + userData.jobName +'</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Administrador: ' + isAdministrator + '</li>\n' +
+            '                        <br>\n' +
+            '                        <li>Dirección: ' + userData.address + '</li>' +
+            '                        <br>\n' +
+            '                        <li>Inicio de labores: ' + startAtCompany + '</li>\n';
         res.send(html);
     })
 })

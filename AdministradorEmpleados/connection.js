@@ -58,11 +58,11 @@ exports.addJob = function (jobName, jobState) {
     }))
 }
 
-exports.getPaymentHistory = function (id) {
+exports.getPaymentHistory = function (idUser) {
     return new Promise(function (resolve, reject) {
-        var query = 'select date,amount from Payment where idUser = ' + id + ';';
-        connection.query(query,function (error,rows) {
-            if(error){
+        var query = 'select date,amount from Payment where idUser = ' + idUser + ';';
+        connection.query(query,function (err,rows) {
+            if(err){
                 reject(err);
             }
             resolve(rows);
@@ -70,3 +70,14 @@ exports.getPaymentHistory = function (id) {
     })
 }
 
+exports.getPersonalInformation = function (idUser) {
+    return new Promise(function (resolve, reject) {
+        var query = 'select p.*, j.jobName from Person as p inner join Job as j on p.job where p.id = '+ idUser +';';
+        connection.query(query,function (err,rows) {
+            if(err){
+                reject(err);
+            }
+            resolve(rows);
+        })
+    })
+}
