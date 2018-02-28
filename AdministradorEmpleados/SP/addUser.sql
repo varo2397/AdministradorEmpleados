@@ -1,5 +1,4 @@
-CREATE PROCEDURE `addUser` 
-(
+CREATE PROCEDURE `addUser`(
 IN accountNumber decimal(20),
 IN firstName varchar(45),
 IN secondName varchar(45),
@@ -18,12 +17,12 @@ IN identification decimal(9),
 OUT result INT
 )
 BEGIN
-	IF EXISTS (select id from person where userName LIKE username OR email LIKE email OR accountNumber LIKE accountNumber OR identification LIKE identification) THEN
+	IF EXISTS (select id from person p where p.userName LIKE username OR p.email LIKE email OR p.accountNumber LIKE accountNumber OR p.identification LIKE identification) THEN
 		SET result = 1;
 	ELSE
-		SET @idJob = (SELECT idJob FROM job WHERE jobName LIKE jobName);
+		SET @idJob = (SELECT idJob FROM job j WHERE j.jobName LIKE jobName);
         INSERT INTO person (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, userName, password, administrator, identification) 
-        VALUES (accountNumber, firstNam, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, @idJob, birthDate, startAtCompany, username, password, 0, identification);
+        VALUES (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, @idJob, birthDate, startAtCompany, username, password, 0, identification);
 		SET result = 0;
     END IF;
 END
