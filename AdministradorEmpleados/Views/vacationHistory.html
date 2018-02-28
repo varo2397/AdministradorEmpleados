@@ -104,8 +104,8 @@ MAIN CONTENT
     <section id="main-content">
         <section class="wrapper site-min-height">
             <div class="row mt">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
                             <h4><i class="fa fa-angle-right"></i> Historial de vacaciones</h4>
@@ -113,16 +113,12 @@ MAIN CONTENT
                             <thead>
                             <tr>
                                 <th><i class="fa  fa-calendar"></i> Fecha</th>
+                                <th><i class=""></i>Cantidad de dias </th>
                                 <th class="hidden-phone"><i class="glyphicon glyphicon-info-sign"></i> Estado</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody id="">
-                            <tr>
-                                <td>Company Ltd</td>
-                                <td><span class="label label-info label-mini">Aprobada</span></td>
 
                             </tr>
+                            </thead>
+                            <tbody id="vacations">
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
@@ -168,7 +164,7 @@ MAIN CONTENT
             url:'http://localhost:3000/vacations',
             method: 'get',
             success: function (data) {
-                
+                $('#vacations').html(data);
             }
         })
     })

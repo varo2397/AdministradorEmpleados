@@ -95,6 +95,18 @@ exports.getPersonalInformation = function (idUser) {
     })
 }
 
+exports.getVacationHistory = function (idUser) {
+    return new Promise(function (resolve, reject) {
+        var query = 'select date,state,numberDays from Vacation where idUser = ' + idUser ;
+        connection.query(query, function (err, rows) {
+            if(err){
+                reject(err);
+            }
+            resolve(rows);
+        })
+    })
+}
+
 exports.addVaction = function (idUser, date, numberDays) {
     return new Promise(function (resolve, reject) {
         var query = 'insert into vacation (date, idUser, state, numberDays) values (\'' + date + '\', ' + idUser + ', 0, ' + numberDays + ');';
