@@ -209,7 +209,13 @@ MAIN CONTENT
                 method: 'post',
                 data: {jobName: jobName, state: state},
                 success: function (data) {
-                    window.location.href = '../Views/jobs.html';
+                    if(data.length == 0 ){
+                        window.location.href = '../Views/jobs.html';
+                    }
+                    else {
+                        $('#error').html(data);
+                    }
+
                 }
             })
         }

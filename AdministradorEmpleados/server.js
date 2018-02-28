@@ -110,7 +110,13 @@ app.post('/editJob',function (req, res) {
     let idJob = sess.selectedIdJob;
 
     db.editJob(idJob, jobName, state).then(function (response) {
-        res.send('');
+        let html = '<br><br>El nombre del puesto ya existe <br><br>';
+        if(response == 1){
+            res.send(html);
+        }
+        else {
+            res.send('')
+        }
     })
 })
 
@@ -121,7 +127,13 @@ app.post('/addJob', function (req, res) {
     let state = req.body.state === 'true' ? 1 : 0; //passing from a string to db type
 
     db.addJob(jobName,state).then(function (response) {
-        res.send('');
+        if(response == 1){
+            let html = '<br><br>El nombre del puesto ya existe <br><br>'
+            res.send(html);
+        }
+        else {
+            res.send('');
+        }
     })
 })
 
@@ -192,7 +204,6 @@ app.get('/vacations', function (req, res) {
 
     db.getVacationHistory(userId).then(function (response) {
         let html = '';
-        console.log(response);
         response.forEach(function (value) {
 
             let date = new Date(value.date);
@@ -208,6 +219,18 @@ app.get('/vacations', function (req, res) {
                 '</tr>';
         })
         res.send(html);
+    })
+})
+
+app.post('/requestVacation',function (req, res) {
+    sess = req.session;
+    let userId = sess.userId;
+
+    let date = req.body.date;
+    let numberDays = req.body.numberDays;
+
+    db.addVaction(userId, date, numberDays).then(function (response) {
+        res.send('');
     })
 })
 
