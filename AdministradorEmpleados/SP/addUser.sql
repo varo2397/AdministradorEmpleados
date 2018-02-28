@@ -14,6 +14,7 @@ IN startAtCompany date,
 IN userName varchar(45),
 IN password varchar(200),
 IN identification decimal(9),
+IN administrator tinyint(1),
 OUT result INT
 )
 BEGIN
@@ -22,7 +23,7 @@ BEGIN
 	ELSE
 		SET @idJob = (SELECT idJob FROM job j WHERE j.jobName LIKE jobName);
         INSERT INTO person (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, userName, password, administrator, identification) 
-        VALUES (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, @idJob, birthDate, startAtCompany, username, password, 0, identification);
+        VALUES (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, @idJob, birthDate, startAtCompany, username, password, administrator, identification);
 		SET result = 0;
     END IF;
 END

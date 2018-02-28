@@ -143,6 +143,34 @@ exports.approveVaction = function (idVaction) {
     })
 }
 
+exports.getJobsForUser = function () {
+    return new Promise(function (resolve, reject) {
+        let query = 'select * from Job where state = 1';
+        connection.query(query,function (err, rows) {
+            if(err){
+                reject(err);
+            }
+            resolve(rows);
+        })
+    })
+}
+
+exports.addUser = function (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone,
+                            housephone, email, job, birthDate, startAtCompany, username, password, identification,administrator) {
+    return new Promise(function (resolve, reject) {
+        let query = 'call addUser(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,@var);select @var;';
+        connection.query(query,
+            [accountNumber, firstName, secondName, firstLastName, secondLastName, address,
+            cellphone, housephone, email, job, birthDate, startAtCompany, username, password, identification,administrator],
+            function (err, rows) {
+                if(err){
+                    reject(err);
+                }
+                resolve(rows[1][0]["@var"]);
+        })
+    })
+}
+
 // reemplazado con el stored procedure addUser
 /*
 exports.addUser = function (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, username, password, identification) {

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Dashboard">
+<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+<title>DASHGUM - Bootstrap Admin Template</title>
+
+<!-- Bootstrap core CSS -->
+<link href="../assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="../assets/css/style.css" rel="stylesheet">
+<link href="../assets/css/style-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<section id="container" >
+    <!-- **********************************************************************************************************************************************************
+TOP BAR CONTENT & NOTIFICATIONS
+*********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a  class="logo"><b>Administración empleados </b></a>
+        <!--logo end-->
+
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li><a class="logout" href="login.html">Cerrar sesion</a></li>
+            </ul>
+        </div>
+    </header>
+    <!--header end-->
+
+    <!-- **********************************************************************************************************************************************************
+MAIN SIDEBAR MENU
+*********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar"  class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+
+
+
+                <li class="mt">
+                    <a href="personalInformation.html">
+                        <i class="fa fa-user"></i>
+                        <span>Informacion personal</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="payroll.html" >
+                        <i class="fa fa-users"></i>
+                        <span>Planilla</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="" >
+                        <i class="fa fa-stack-exchange  "></i>
+                        <span>Historiales</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a  href="vacationHistory.html">Vacaciones</a></li>
+                        <li><a  href="paymentHistory.html">Pagos</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a  href="jobs.html" >
+                        <i class="fa fa-book"></i>
+                        <span>Puestos</span>
+                    </a>
+                </li>
+
+
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!--sidebar end-->
+
+    <!-- **********************************************************************************************************************************************************
+MAIN CONTENT
+*********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper site-min-height">
+            <div class="row mt">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6 form-panel">
+                    <form class="form-horizontal style-form" method="get">
+                        <h3><i class="fa fa-angle-right"></i> Crear Usuario</h3>
+                        <br>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Primer nombre <p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" id="firstName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Segundo nombre</label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" id="secondName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Primer apellido<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" id="firstLastName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Segundo apellido<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" id="secondLastName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Correo<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="email" id="email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Cédula<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="number" id="identification" class="form-control">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Fecha de nacimiento<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="date" id="birthDate" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Número de cuenta<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="number" id="accountNumber" class="form-control" >
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Número de celular<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="number" id="cellphone" class="form-control" >
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Número fijo</label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="number" id="housephone" class="form-control">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Dirección<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <textarea style="resize: none" id="address" class="form-control" cols="64" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Nombre de usuario<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" id="username" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Contraseña<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="password" id="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Confirmar contraseña<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="password" id="confirmPassword" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Administrador<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <select id="administrator" class="form-control">
+                                    <option value="1">No</option>
+                                    <option value="0">Si</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-sm-2 control-label">Puesto<p class="text-danger">*</p></label>
+                            <div class="col-md">
+                            </div>
+                            <div class="col-sm-8">
+                                <select id="job" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-danger col-sm-2 col-sm-2 control-label" id="error"></label>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="  form-group ">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+                                    <button type="button" id="submitForm" class="btn btn-theme">Actualizar</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <a type="button" href="payroll.html" class="btn btn-theme04">Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /row -->
+
+
+        </section><! --/wrapper -->
+    </section><!-- /MAIN CONTENT -->
+
+    <!--main content end-->
+
+</section>
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script>window.$ = window.jQuery = require('jquery');</script>
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script class="include" type="text/javascript" src="../assets/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="../assets/js/jquery.scrollTo.min.js"></script>
+<script src="../assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+<!--common script for all pages-->
+<script src="../assets/js/common-scripts.js"></script>
+
+<!--script for this page-->
+
+<script>
+    //custom select box
+
+    $(function(){
+        $('select.styled').customSelect();
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:3000/getJobsForUser',
+            method: 'get',
+            success: function (data) {
+                $('#job').html(data);
+            }
+        })
+    })
+</script>
+
+<script>
+    $('#submitForm').on('click',function () {
+        let firstName = $('#firstName').val();
+        let secondName = $('#secondName').val();
+        let firstLastName = $('#firstLastName').val();
+        let secondLastName = $('#secondLastName').val();
+        let email = $('#email').val();
+        let identification = $('#identification').val();
+        let birthDate = $('#birthDate').val();
+        let accountNumber = $('#accountNumber').val();
+        let cellphone = $('#cellphone').val();
+        let housephone = $('#housephone').val();
+        let address = $('#address').val();
+        let userName = $('#username').val();
+        let password = $('#password').val();
+        let confirmPassword = $('#confirmPassword').val();
+        let administrator = $('#administrator').val();
+        let job = $("#job option:selected").text();;
+
+        let today = new Date();
+        let verificationBirthDate = new Date(birthDate);
+        let html;
+
+
+
+
+        if(firstName.length == 0 || firstLastName.length == 0 || secondLastName.length == 0 || email.length == 0
+         || identification.toString().length == 0 || cellphone.toString().length == 0 || address.length == 0
+         || userName.length == 0 || password.length == 0 || confirmPassword.length == 0){
+            html = 'Rellene los campos faltantes identificados por *';
+            $('#error').html(html);
+        }
+        else if(today.getFullYear() - 18 < verificationBirthDate.getFullYear() ){
+            html = 'Tiene que tener una edad minima de 18';
+            $('#error').html(html);
+        }
+        else if(cellphone.toString().length != 8 || (housephone.toString().length != 0 && housephone.toString().length != 8)){
+            html = 'Los numeros de telefono tiene que tener 8 digitos';
+            $('#error').html(html);
+        }
+        else if(identification.toString().length != 9){
+            html = 'Los numeros de cedula tienen que tener 9 digitos';
+            $('#error').html(html);
+        }
+        else if(password != confirmPassword){
+            html = 'Ingreso diferentes contraseñas';
+            $('#error').html(html);
+        }
+        else{
+            let userData = {
+                firstName: firstName,
+                secondName: secondName,
+                firstLastName: firstLastName,
+                secondLastName: secondLastName,
+                email: email,
+                identification: identification,
+                username: userName,
+                password: password,
+                cellphone: cellphone,
+                housephone: housephone,
+                birthDate: birthDate,
+                administrator: administrator,
+                job: job,
+                address: address,
+                accountNumber: accountNumber
+            }
+            console
+            $.ajax({
+                url: 'http://localhost:3000/addUser',
+                method: 'post',
+                data: JSON.parse(JSON.stringify(userData)),
+                success: function (data) {
+                    if(data.length != 0){
+                        $('#error').html(data);
+                    }
+                    else {
+                        window.location.href = '../Views/payroll.html';
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

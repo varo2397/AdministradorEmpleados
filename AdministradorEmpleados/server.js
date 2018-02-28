@@ -110,6 +110,7 @@ app.post('/editJob',function (req, res) {
     let idJob = sess.selectedIdJob;
 
     db.editJob(idJob, jobName, state).then(function (response) {
+        console.log(response);
         let html = '<br><br>El nombre del puesto ya existe <br><br>';
         if(response == 1){
             res.send(html);
@@ -232,6 +233,61 @@ app.post('/requestVacation',function (req, res) {
     db.addVaction(userId, date, numberDays).then(function (response) {
         res.send('');
     })
+})
+
+app.get('/getJobsForUser', function (req, res) {
+    db.getJobsForUser().then(function (response) {
+        let html = '';
+        response.forEach(function (value) {
+            html += '<option value=\"' + value.idJob + '\">' + value.jobName +'</option>';
+            res.send(html);
+        })
+    })
+})
+
+app.post('/addUser', function (req, res) {
+    let firstName = req.body.firstName;
+    let secondName = req.body.secondName;
+    let firstLastName = req.body.firstLastName;
+    let secondLastName = req.body.secondLastName;
+    let email = req.body.email;
+    let identification = req.body.identification;
+    let birthDate = req.body.birthDate;
+    let accountNumber = req.body.accountNumber;
+    let cellphone = req.body.cellphone;
+    let housephone = req.body.housephone;
+    let address = req.body.address;
+    let userName = req.body.username;
+    let password =  bcrypt.hashSync(req.body.password, 10);
+    let administrator = req.body.administrator;
+    let job = req.body.job;
+
+    let today = new Date();
+    let startAtCompany = (today.getFullYear()  + '-' + today.getMonth() + '-' + today.getDay());
+    today = new Date(birthDate);
+    let formattedBirthDate = (today.getFullYear() + '-' +  (today.getMonth() + 1) + '-' + today.getDay());
+
+    if(housephone.length == 0){
+        housephone = 0;
+    }
+
+    let html = '';
+    db.addUser(accountNumber,firstName,secondName,firstLastName,secondLastName,address,cellphone,
+        housephone,email,job,formattedBirthDate,startAtCompany,userName,password,identification,administrator)
+        .then(function (response) {
+        if(response == 1){
+            html += 'Ya existe un usuario con ese nombre de usuario/correo/identificacion/numero de cuenta';
+            res.send(html);
+        }
+        else {
+            res.send(html);
+        }
+    })
+})
+
+app.get('/logout', function (req, res) {
+    req.session.destroy();
+    res.send('');
 })
 
 app.listen(port);
