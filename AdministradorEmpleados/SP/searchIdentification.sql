@@ -1,9 +1,9 @@
-CREATE PROCEDURE `searchUserName`(
-IN userName VARCHAR(45),
+CREATE PROCEDURE `searchIdentification`(
+IN identification DECIMAL(9,0),
 OUT result INT
 )
 BEGIN
-    IF EXISTS (SELECT p.userName FROM person p WHERE p.userName LIKE userName)
+    IF EXISTS (SELECT p.identifacation FROM person p WHERE p.identifacation LIKE identification)
 	THEN
 		SET result = 1;
         
@@ -12,8 +12,8 @@ BEGIN
 		FROM person p 
 		INNER JOIN job j
 			ON j.idJob = p.job
-		WHERE p.userName LIKE userName;
-    ELSE
+		WHERE p.identification LIKE identification;
+	ELSE
 		SET result = 0;
     END IF
 END
