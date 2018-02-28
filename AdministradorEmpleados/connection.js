@@ -72,7 +72,7 @@ exports.getPaymentHistory = function (idUser) {
 
 exports.addPayment = function (idUser, date, amount) {
     return new Promise(function (resolve, reject) {
-        let query = 'insert into Payment (idUser, date, amount) values (\'' + idUser + '\', ' + date + ', 0, ' + amount + ');';
+        let query = 'insert into Payment (idUser, date, amount) values (' + idUser + ', \'' + date + '\', ' + amount + ');';
         connection.query(query,function (err, rows) {
             if(err){
                 reject(err);
@@ -106,7 +106,7 @@ exports.getVacationHistory = function (idUser) {
     })
 }
 
-exports.addVaction = function (idUser, date, numberDays) {
+exports.addVacation = function (idUser, date, numberDays) {
     return new Promise(function (resolve, reject) {
         let query = 'insert into vacation (date, idUser, state, numberDays) values (\'' + date + '\', ' + idUser + ', 0, ' + numberDays + ');';
         connection.query(query,function (err, rows) {
@@ -171,17 +171,10 @@ exports.addUser = function (accountNumber, firstName, secondName, firstLastName,
     })
 }
 
-// reemplazado con el stored procedure addUser
-/*
-exports.addUser = function (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, username, password, identification) {
-    return new Promise(function (resolve, reject) {
-		
-		// query para ver si ya existe un usuario con ese username, email, accountNumber, identification
-		let query = 'select id from person where userName LIKE \'' + username + '\' OR email LIKE \'' + email + '\' OR accountNumber LIKE \'' + accountNumber + '\' OR identification LIKE \'' + identification + '\';'
-        // query que devuelve una unica fila con el id del job
-		let query = 'select idJob from job where jobName LIKE \'' + job + '\';';
-		//let jobId = ...
-		let query = 'insert into person (accountNumber, firstName, secondName, firstLastName, secondLastName, address, cellphone, housephone, email, job, birthDate, startAtCompany, userName, password, administrator, identification) values (' + accountNumber + ', \'' + firstName + '\', \'' + secondName + '\', \'' + firstLastName + '\', \'' + secondLastName + '\', \'' + address + '\', ' + cellphone + ', ' + housephone + ', \'' + email + '\', ' + jobId + ', \'' + birthDate + '\', \'' + startAtCompany + '\', \'' + username + '\', \'' + bcrypt.hashSync(password,10) '\', 0, ' + identification + ');';
+exports.searchUserByUserName = function (username,idCurrentUser) {
+    return new Promise( function (resolve,reject) {
+        let query = 'SELECT p.* FROM person p INNER JOIN job j on j.idJob = p.job WHERE p.userName LIKE \'%'+ username+ '%\' and p.id != ' + 1 + ';';
+
         connection.query(query,function (err, rows) {
             if(err){
                 reject(err);
@@ -190,4 +183,16 @@ exports.addUser = function (accountNumber, firstName, secondName, firstLastName,
         })
     })
 }
-*/
+
+exports.searchUserByEmail = function (email, idCurrentUser) {
+    return new Promise(function (resolve, reject) {
+        let query = 'SELECT p.* FROM person p INNER JOIN job j on j.idJob = p.job WHERE p.email LIKE \'%'+ email+ '%\' and p.id != ' + 1 + ';';
+        connection.query(query,function (err,rows) {
+            if(err){
+                reject(err);
+            }
+            resolve(rows);
+        })
+    })
+}
+

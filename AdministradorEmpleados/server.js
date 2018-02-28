@@ -230,7 +230,7 @@ app.post('/requestVacation',function (req, res) {
     let date = req.body.date;
     let numberDays = req.body.numberDays;
 
-    db.addVaction(userId, date, numberDays).then(function (response) {
+    db.addVacation(userId, date, numberDays).then(function (response) {
         res.send('');
     })
 })
@@ -285,10 +285,111 @@ app.post('/addUser', function (req, res) {
     })
 })
 
+app.post('/getUsersByUserName',function (req, res) {
+
+    sess = req.session;
+    let currentUserId = sess.userId;
+    let userName = req.body.username;
+    db.searchUserByUserName(userName, currentUserId).then(function (response) {
+        let html = '';
+        response.forEach(function (value) {
+            html += '<tr>' +
+                '<td>Nombre: '+ value.firstName + ' ' + value.secondName + ' ' + value.firstLastName + ' ' + value.secondLastName + ' </td>'+
+                '<td>Correo: ' + value.email + '</td>'+
+                '<td>Celular: ' + value.cellphone + '</td>'+
+                '<td><button class="btn btn-theme btn-xs select" id="'+ value.id +'"><i class="fa fa-eye  "></i></button></td>' +
+                '</tr>';
+        })
+        res.send(html);
+    })
+})
+
+app.post('/getUsersByEmail',function (req, res) {
+
+    sess = req.session;
+    let currentUserId = sess.userId;
+    let email = req.body.email;
+    db.searchUserByEmail(email, currentUserId).then(function (response) {
+        let html = '';
+        sess.users = response;
+        response.forEach(function (value) {
+            html += '<tr>' +
+                '<td>Nombre: '+ value.firstName + ' ' + value.secondName + ' ' + value.firstLastName + ' ' + value.secondLastName + ' </td>'+
+                '<td>Correo: ' + value.email + '</td>'+
+                '<td>Celular: ' + value.cellphone + '</td>'+
+                '<td><button class="btn btn-theme btn-xs select" id="'+ value.id +'"><i class="fa fa-eye  "></i></button></td>' +
+                '</tr>';
+        })
+        res.send(html);
+    })
+})
+
+app.post('/selectedUser',function (req, res) {
+    sess = req.session;
+    sess.selectedIdUser = req.body.selectedIdUser;
+
+    res.send('');
+})
+
+
+app.get('/getUserInfo',function (req, res) {
+    sess = req.session;
+    let userId = sess.selectedIdUser;
+
+    db.getPersonalInformation(userId).then(function (response) {
+        let html = '';
+        let userData = response[0];
+
+        //type of user
+        let isAdministrator = (userData.administrator == 1 ? 'Si' : 'No' );
+
+        //format date strings
+        let date = new Date(userData.birthDate);
+        let birthDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+
+        date = new Date(userData.startAtCompany);
+        let startAtCompany = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+
+        html += '<li>Nombre: '+ userData.firstName + ' ' + userData.secondName + ' ' + userData.firstLastName + ' ' + userData.secondLastName + '</li>\n' +
+            '<br>\n' +
+            '<li>Cédula: '+ userData.identification + '</li>\n' +
+            '<br>\n' +
+            '<li>Celular: '+ userData.cellphone + '</li>\n' +
+            '<br>\n' +
+            '<li>Fecha de nacimiento: '+ birthDate + '</li>\n' +
+            '<br>\n' +
+            '<li>Correo: '+ userData.email + '</li>\n' +
+            '<br>\n' +
+            '<li>Número de cuenta bancaria: '+ userData.accountNumber +'</li>\n' +
+            '<br>\n' +
+            '<li>Puesto: ' + userData.jobName +'</li>\n' +
+            '<br>\n' +
+            '<li>Administrador: ' + isAdministrator + '</li>\n' +
+            '<br>\n' +
+            '<li>Dirección: ' + userData.address + '</li>' +
+            '<br>\n' +
+            '<li>Inicio de labores: ' + startAtCompany + '</li>\n';
+        res.send(html);
+    })
+})
+
+app.post('/addPayment',function (req, res) {
+    sess = req.session;
+    let userId = sess.selectedIdUser;
+    let date = new Date();
+    let today = (date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay());
+    let amount = req.body.amount;
+
+    db.addPayment(userId,today,amount).then(function (response) {
+        res.send('');
+    })
+})
+
 app.get('/logout', function (req, res) {
     req.session.destroy();
     res.send('');
 })
+
 
 app.listen(port);
 

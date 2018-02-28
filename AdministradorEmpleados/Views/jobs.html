@@ -215,7 +215,17 @@ MAIN CONTENT
         })
     });
 </script>
-
+<script>
+    $('#logout').on('click',function () {
+        $.ajax({
+            url: 'http://localhost:3000/logout',
+            method: 'get',
+            success: function (data) {
+                window.location.href = '../Views/login.html';
+            }
+        })
+    })
+</script>
 
 </body>
 </html>

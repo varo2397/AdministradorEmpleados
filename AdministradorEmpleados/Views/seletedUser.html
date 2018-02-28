@@ -42,7 +42,7 @@ TOP BAR CONTENT & NOTIFICATIONS
 
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="login.html">Cerrar sesion</a></li>
+                <li><button class="logout" id="logout" href="login.html">Cerrar sesion</button></li>
             </ul>
         </div>
     </header>
@@ -60,7 +60,7 @@ MAIN SIDEBAR MENU
 
 
                 <li class="mt">
-                    <a href="personalInformation.html">
+                    <a class="active" href="personalInformation.html">
                         <i class="fa fa-user"></i>
                         <span>Informacion personal</span>
                     </a>
@@ -104,30 +104,15 @@ MAIN CONTENT
     <section id="main-content">
         <section class="wrapper site-min-height">
             <div class="row mt">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <div class="content-panel">
-                        <button class="btn btn-theme">Aprobar vacaciones</button>
-                        <br>
-                        <br>
-                        <table class="table table-striped table-advance table-hover">
-                            <h4><i class="fa fa-angle-right"></i> Historial de vacaciones</h4>
-                            <hr>
-                            <thead>
-                            <tr>
-                                <th><i class="fa  fa-calendar"></i> Fecha</th>
-                                <th><i class=""></i>Cantidad de dias </th>
-                                <th class="hidden-phone"><i class="glyphicon glyphicon-info-sign"></i> Estado</th>
+                <div class="col-lg-6">
+                    <button id="payment" class="btn btn-theme">Realizar pago</button>
+                    <h2>Información</h2>
+                    <br>
+                    <div id="info" style="font-size: 15px">
 
-                            </tr>
-                            </thead>
-                            <tbody id="vacations">
-                            </tbody>
-                        </table>
-                    </div><!-- /content-panel -->
-                </div><!-- /col-md-12 -->
-            </div><!-- /row -->
-
+                    </div>
+                </div>
+            </div>
 
         </section><! --/wrapper -->
     </section><!-- /MAIN CONTENT -->
@@ -164,10 +149,10 @@ MAIN CONTENT
 <script>
     $(document).ready(function () {
         $.ajax({
-            url:'http://localhost:3000/vacations',
+            url: 'http://localhost:3000/getUserInfo',
             method: 'get',
             success: function (data) {
-                $('#vacations').html(data);
+                $('#info').html(data);
             }
         })
     })
@@ -183,5 +168,24 @@ MAIN CONTENT
         })
     })
 </script>
+
+<script>
+    $(document).on('click', '#payment', function(){
+        $.ajax({
+            url: 'http://localhost:3000/checkPermisions',
+            method: 'get',
+            success: function (data) {
+                if(data == ''){
+                    window.location.href = '../Views/addPayment.html';
+                }
+                else {
+                    $('#error').html(data);
+                }
+
+            }
+        })
+    });
+</script>
+
 </body>
 </html>
