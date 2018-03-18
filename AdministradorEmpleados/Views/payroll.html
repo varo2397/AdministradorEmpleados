@@ -252,6 +252,24 @@
 </script>
 
 <script>
+    $(document).on('click', '#addUser', function(){
+        $.ajax({
+            url: 'http://localhost:3000/checkPermisions',
+            method: 'get',
+            success: function (data) {
+                if(data == ''){
+                    window.location.href = '../Views/addUser.html';
+                }
+                else {
+                    $('#error').html(data);
+                }
+
+            }
+        })
+    });
+</script>
+
+<script>
     $('#logout').on('click',function () {
         $.ajax({
             url: 'http://localhost:3000/logout',

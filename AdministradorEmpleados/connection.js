@@ -1,7 +1,6 @@
 
 let mysql = require('mysql');
-let connection = mysql.createConnection({
-    host: 'localhost',
+let connection = mysql.createConnection({    host: 'localhost',
     user: 'root',
     password: 'root',
     database: 'companysystem',
@@ -108,6 +107,7 @@ exports.getVacationHistory = function (idUser) {
 
 exports.addVacation = function (idUser, date, numberDays) {
     return new Promise(function (resolve, reject) {
+        console.log(date);
         let query = 'insert into vacation (date, idUser, state, numberDays) values (\'' + date + '\', ' + idUser + ', 0, ' + numberDays + ');';
         connection.query(query,function (err, rows) {
             if(err){
@@ -120,7 +120,7 @@ exports.addVacation = function (idUser, date, numberDays) {
 
 exports.getUnapprovedVactions = function () {
     return new Promise(function (resolve, reject) {
-        let query = 'select p.firstName, p.secondName, p.firstLastName, p.secondLastName ,v.* from vacation v inner join person p on v.idUser = p.id where state = 0 where v.date > current_timestamp;';
+        let query = 'select p.firstName, p.secondName, p.firstLastName, p.secondLastName ,v.* from vacation v inner join person p on v.idUser = p.id where state = 0 &&  v.date > current_timestamp;';
         connection.query(query,function (err, rows) {
             if(err){
                 reject(err);
@@ -131,9 +131,9 @@ exports.getUnapprovedVactions = function () {
 }
 
 
-exports.approveVaction = function (idVaction) {
+exports.approveVaction = function (idVaction,state) {
     return new Promise(function (resolve, reject) {
-        let query = 'update vacation set state = 1 where idVacation = ' + idVaction + ';';
+        let query = 'update vacation set state = ' + state +' where idVacation = ' + idVaction + ';';
         connection.query(query,function (err, rows) {
             if(err){
                 reject(err);

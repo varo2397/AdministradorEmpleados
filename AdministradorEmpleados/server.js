@@ -21,6 +21,7 @@ const port = 3000;
 let sess; //letiable for sessions
 
 app.post('/login', function (req, res) {
+    //server request for log in
 
     let username = req.body.username; //username input
     let password = req.body.password; //password input
@@ -46,7 +47,7 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/jobs',function (req, res) {
-    //get all of the jobs available
+    //server requests for seeing all of the available jobs
     db.getJobs().then(function (response) {
         sess = req.session;
         sess.jobs = response;
@@ -89,7 +90,7 @@ app.post('/selectedJob', function (req, res) {
 })
 
 app.get('/checkPermisions', function(req, res){
-    //get the info of selected job
+    //checkin to see if the user has permissions for the task
     sess = req.session;
     let typeOfUser = sess.typeOfUser;
 
@@ -102,7 +103,7 @@ app.get('/checkPermisions', function(req, res){
 })
 
 app.post('/editJob',function (req, res) {
-    //edit a job
+    //server request for editing a job
     sess = req.session;
 
     let jobName = req.body.jobName;
@@ -122,7 +123,7 @@ app.post('/editJob',function (req, res) {
 })
 
 app.post('/addJob', function (req, res) {
-    //adding a job
+    //server request for creating a job
     sess = req.session;
     let jobName = req.body.jobName;
     let state = req.body.state === 'true' ? 1 : 0; //passing from a string to db type
@@ -139,7 +140,7 @@ app.post('/addJob', function (req, res) {
 })
 
 app.get('/getPaymentHistory', function (req, res) {
-
+    //server request for the payment history of the logged user
     sess = req.session;
     let userId = sess.userId; //current user
 
@@ -159,6 +160,7 @@ app.get('/getPaymentHistory', function (req, res) {
 })
 
 app.get('/getPersonalInfo',function (req, res) {
+    //server request for getting the personal information of the logged in user
     sess = req.session;
     let userId = sess.userId; //current logged in user
 
@@ -200,6 +202,7 @@ app.get('/getPersonalInfo',function (req, res) {
 })
 
 app.get('/vacations', function (req, res) {
+    //seerver request for getting all of the vacation request from a user
     sess = req.session;
     let userId = sess.userId;
 
@@ -208,7 +211,8 @@ app.get('/vacations', function (req, res) {
         response.forEach(function (value) {
 
             let date = new Date(value.date);
-            let vacationDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+            let vacationDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+            
             let state = (value.state == 1 ? 'Aprobada' : 'Negada');
             let label = (value.state == 1 ? 'info' : 'danger');
             let numberDays = value.numberDays;
@@ -224,18 +228,24 @@ app.get('/vacations', function (req, res) {
 })
 
 app.post('/requestVacation',function (req, res) {
+    //server request that creates a vacation for a user
     sess = req.session;
     let userId = sess.userId;
 
-    let date = req.body.date;
+    let date = new Date(req.body.date);
     let numberDays = req.body.numberDays;
 
-    db.addVacation(userId, date, numberDays).then(function (response) {
+
+    let formattedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDay();
+    console.log(formattedDate);
+
+    db.addVacation(userId, formattedDate, numberDays).then(function (response) {
         res.send('');
     })
 })
 
 app.get('/getJobsForUser', function (req, res) {
+    //server request for getting the jobs available for assignin to new users
     db.getJobsForUser().then(function (response) {
         let html = '';
         response.forEach(function (value) {
@@ -246,6 +256,8 @@ app.get('/getJobsForUser', function (req, res) {
 })
 
 app.post('/addUser', function (req, res) {
+    //server request for creating a user
+
     let firstName = req.body.firstName;
     let secondName = req.body.secondName;
     let firstLastName = req.body.firstLastName;
@@ -286,7 +298,7 @@ app.post('/addUser', function (req, res) {
 })
 
 app.post('/getUsersByUserName',function (req, res) {
-
+    //server request to search users by username
     sess = req.session;
     let currentUserId = sess.userId;
     let userName = req.body.username;
@@ -305,7 +317,7 @@ app.post('/getUsersByUserName',function (req, res) {
 })
 
 app.post('/getUsersByEmail',function (req, res) {
-
+    //server request or searching users by email
     sess = req.session;
     let currentUserId = sess.userId;
     let email = req.body.email;
@@ -325,6 +337,7 @@ app.post('/getUsersByEmail',function (req, res) {
 })
 
 app.post('/selectedUser',function (req, res) {
+    //server request for saving the seleted user
     sess = req.session;
     sess.selectedIdUser = req.body.selectedIdUser;
 
@@ -333,6 +346,7 @@ app.post('/selectedUser',function (req, res) {
 
 
 app.get('/getUserInfo',function (req, res) {
+    //server request for getting an user personal information
     sess = req.session;
     let userId = sess.selectedIdUser;
 
@@ -345,10 +359,10 @@ app.get('/getUserInfo',function (req, res) {
 
         //format date strings
         let date = new Date(userData.birthDate);
-        let birthDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+        let birthDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
         date = new Date(userData.startAtCompany);
-        let startAtCompany = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+        let startAtCompany = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
         html += '<li>Nombre: '+ userData.firstName + ' ' + userData.secondName + ' ' + userData.firstLastName + ' ' + userData.secondLastName + '</li>\n' +
             '<br>\n' +
@@ -374,10 +388,11 @@ app.get('/getUserInfo',function (req, res) {
 })
 
 app.post('/addPayment',function (req, res) {
+    //server request for adding a payment
     sess = req.session;
     let userId = sess.selectedIdUser;
-    let date = new Date();
-    let today = (date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay());
+    let date = new Date(); //temporary date for formatting
+    let today = (date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay()); //the date in which the payments get done
     let amount = req.body.amount;
 
     db.addPayment(userId,today,amount).then(function (response) {
@@ -386,9 +401,13 @@ app.post('/addPayment',function (req, res) {
 })
 
 app.get('/logout', function (req, res) {
+    //server request for loggin out
     req.session.destroy();
     res.send('');
 })
+
+
+
 
 
 app.listen(port);
